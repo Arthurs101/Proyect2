@@ -18,7 +18,7 @@
 <body>
     <div class="grid-container">
         <div class="grid-item">
-            <img src="./media/lbck.png" alt = "match" class = "mainBK">
+            <img src="/media/lbck.png" alt = "match" class = "mainBK">
         </div>
         <div class="grid-item">
          <!-- FORMULARIO-->
@@ -26,22 +26,24 @@
          <!-- cuerpo del formulario --> 
          <fieldset>
           <form id = "form" action="/register/save" method = "POST" th:object = "${form}"  onsubmit="validateForm()">
-            <tr>
-              <td><label for="user">Usuario</label></td>
-              <td><input type="text" size="25" th:field="*{person.username}"></td>
-            </tr>
-            <tr>
-              <td><label for="nombre">Nombre</label></td>
-              <td><input type="text" size="25" th:field="*{person.name}"></td>
-            </tr>
-            <tr>
-              <td><label for="nombre">Contraseña</label></td>
-              <td><input type="password" size="25" th:field="*{person.password}"></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td><input class="button" type="submit" value="save"></td>
-            </tr>
+            <center>
+              <tr>
+                <td><label for="user">Usuario</label></td>
+                <td><input class= "form-control" type="text" size="25" th:field="*{person.username}"></td>
+              </tr>
+              <tr>
+                <td><label for="nombre">Nombre</label></td>
+                <td><input class= "form-control" type="text" size="25" th:field="*{person.name}"></td>
+              </tr>
+              <tr>
+                <td><label for="nombre">Contraseña</label></td>
+                <td><input class= "form-control" type="password" size="25" th:field="*{person.password}"></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td><input class="button" type="submit" value="save"></td>
+              </tr>
+            </center>
             </form>
         </fieldset>
 
