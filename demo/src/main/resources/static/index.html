@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">  <!--caracteres especiales-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--descripcion de tamaño de la pantalla, que sea del mismo tamaño de la pantalla-->
+    <meta name = "--descripcion" content="primera página"> <!--descripcion de la pagina-->
+    <meta name = "robots" content="index, follow"> <!--permitir que los bots muestren la página-->
+    <link rel="stylesheet" href="./stylesheets/style.css"> <!--estio de la p´+agina con css-->>
+    <title>Match n mate</title>
+</head>
+<body> 
+  <div class="grid-container">
+    <div class="grid-item">
+        <img src="./media/lbck.png" alt = "match" class = "mainBK">
+    </div>
+    <div class="grid-item">
+      <center>
+        <div class="loginContainer" style="width: 18rem">
+            <div class="card-body">
+              <form>
+                <div class="mb-3">
+                  <h3>
+                    Iniciar Sesión 
+                  </h3>
+                  <label for="USR" class="form-label">Usuario</label>
+                  <input
+                    type="username"
+                    class="form-control"
+                    id="USR"
+                    />
+    
+                </div>
+                <div class="mb-3">
+                  <label for="pword" class="form-label">Contraseña</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="pword"
+                  />
+                </div>
+                <center>
+                <button type="submit" class="btn" id = "login">Iniciar Sesión</button>
+                </center>
+                <center>
+                    <a href="/register"><button type="button" class="btn" id = "register">Registrarse</button>&nbsp</a>
+                </center>
+              </form>
+            </div>
+        </div>
+        </center>
+    </div>
+  </div>
+</body>
