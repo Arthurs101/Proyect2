@@ -17,6 +17,13 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>org.neo4j</groupId>
+			<artifactId>neo4j-ogm-bolt-driver</artifactId>
+			<version>3.2.32</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-neo4j</artifactId>
@@ -85,6 +92,19 @@
 			<artifactId>lombok</artifactId>
 			<scope>annotationProcessor</scope>
 		</dependency>
+	<dependency>
+    <groupId>org.neo4j</groupId>
+    <artifactId>neo4j-ogm-embedded-driver</artifactId>
+    <version>3.2.23</version>
+    <scope>runtime</scope>
+</dependency>
+<dependency>
+    <groupId>org.neo4j</groupId>
+    <artifactId>neo4j</artifactId>
+    <version>4.2.7</version>
+    <scope>runtime</scope>
+</dependency>
+		
 	</dependencies>
 
 	<build>
