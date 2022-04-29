@@ -1,0 +1,9 @@
+/users/new --- registrarse 
+/users/save -- guardar primero registro
+/users/save/crutial ---guardar gustos de persohnalidad, ubicacion y cualidades personales
+/users/Dashboard --- mostrar recomenddaciones y posiblemente un menu
+/users/Dashboard/add/id ---agregar a amigos una recomendacion
+/users/Dashboard/delete/id ---eliminar una recomendacion
+
+
+/user/Friends ---mostrar amigos
