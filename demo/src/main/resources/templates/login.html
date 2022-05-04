@@ -8,13 +8,6 @@
     <meta name = "robots" content="index, follow"> <!--permitir que los bots muestren la página-->
     <link rel="stylesheet" href="/stylesheets/style.css"> <!--estio de la p´+agina con css-->>
 </head>
-<script>function validateForm() {
-  var x = document.forms["form"]["name"].value;
-  if (x == "") {
-      alert("Name must be filled out");
-      return false;
-  }
-}</script>
 <body>
     <div class="grid-container">
         <div class="grid-item">
@@ -22,18 +15,13 @@
         </div>
         <div class="grid-item">
          <!-- FORMULARIO-->
-         <legend> Formulario de Registro</legend>
-         <!-- cuerpo del formulario --> 
+         <legend> IniciarSesion</legend>
          <fieldset>
-          <form id = "form" th:action="@{/user/save}" method = "POST" th:object = "${person}">
+          <form id = "form" th:action="@{/user/login}" th:object = "${person}" method = "POST" >
             <center>
               <tr>
                 <td><label for="user">Usuario</label></td>
-                <td><input class= "form-control" type="text" size="25" th:field="*{username}"></td>
-              </tr>
-              <tr>
-                <td><label for="nombre">Nombre</label></td>
-                <td><input class= "form-control" type="text" size="25" th:field="*{name}"></td>
+                <td><input class= "form-control" type="text" size="25"  th:field="*{username}" ></td>
               </tr>
               <tr>
                 <td><label for="nombre">Contraseña</label></td>
@@ -41,7 +29,7 @@
               </tr>
               <tr>
                 <td>&nbsp;</td>
-                <td><input class="button" type="submit" value="save"></td>
+                <td><input class="button" type="submit" value="login"></td>
               </tr>
             </center>
             </form>

@@ -12,5 +12,4 @@ import lombok.Getter;
 @Getter
 public class Genere {
     @Id private final String interestType;
-    
 }
