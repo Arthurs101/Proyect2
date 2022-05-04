@@ -13,33 +13,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/user")
+
 public class UserController {
     private PersonDTO personDTO;//usuario actual
-    @GetMapping("/new")
+    @GetMapping("/user/new")
     public ModelAndView newUser(){//registrar nuevo usuario
-        RegisterForm form = new RegisterForm();
-        form.setperson(new PersonDTO());
         var params = new HashMap<String, Object>();
-        params.put("form", form);
+        PersonDTO user = new PersonDTO();
+        params.put("person", user);
         return new ModelAndView("register", params);
     }
-    @PostMapping("/save")
+    @PostMapping("/user/save")
     public ModelAndView saveUser(){
         return new ModelAndView ("index");
     }
-    @GetMapping("dashboard/add/{id}")
+
+    @GetMapping("/user/sign")
+    public ModelAndView logUser(){//registrar nuevo usuario
+        var params = new HashMap<String, Object>();
+        PersonDTO user = new PersonDTO();
+        params.put("person", user);
+        return new ModelAndView("login",params);
+    }
+
+    @PostMapping("/user/login")
+    public ModelAndView loginUser(){//inicio de sesion 
+        return new ModelAndView("registerPriority");
+    }
+
+    
+    @GetMapping("/user/dashboard/add/{id}")
     public ModelAndView addUser(@ModelAttribute("id") String id)//solicitarle al MVC ek campo ID
     {
         
         return new ModelAndView("redirect:/user/dashboard");
     }
-    @GetMapping("/logout")
+    @GetMapping("/user/logout")
     public ModelAndView logout(){
         this.personDTO = null; //eliminar informacion de sesion temporal}
         return new ModelAndView ("index"); //regresar a inicio de sesion :p
     }
+    @GetMapping("/index")
+    public String showUserList() {
+    return "index";
+    }
+}
     
 
 
-}
