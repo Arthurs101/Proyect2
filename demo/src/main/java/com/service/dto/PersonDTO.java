@@ -21,14 +21,14 @@ import lombok.Setter;
 @Setter
 @Getter
 public class PersonDTO {
-    @NotBlank(message = "Name is mandatory")
     private String name;
-    @NotBlank(message = "Username is mandatory")
     private String username;
-    @NotBlank(message = "Password is mandatory")
     private String password;
     private Place ubivation; 
     private Set<Person> teammates;
+    public PersonDTO(String name) {
+        this.name = name;
+    }
     
 
 }
