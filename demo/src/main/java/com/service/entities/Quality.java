@@ -3,7 +3,7 @@ package com.service.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 
-@Node
+@Node("QUALITY")
 public class Quality {
 
     @Id private String name;

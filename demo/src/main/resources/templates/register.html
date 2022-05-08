@@ -27,6 +27,7 @@
          <fieldset>
           <form id = "form" th:action="@{/user/save}" method = "POST" th:object = "${person}">
             <center>
+              
               <tr>
                 <td><label for="user">Usuario</label></td>
                 <td><input class= "form-control" type="text" size="25" th:field="*{username}"></td>
@@ -43,8 +44,12 @@
                 <td>&nbsp;</td>
                 <td><input class="button" type="submit" value="save"></td>
               </tr>
+              <div th:object="${warning}" >
+                <td th:text="${warning.error}">
+              </div> 
             </center>
             </form>
+            
         </fieldset>
 
         </div>

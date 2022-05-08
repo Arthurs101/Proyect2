@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.service.dto.PersonDTO;
+
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
@@ -26,20 +28,15 @@ import org.springframework.data.neo4j.core.schema.GeneratedValue;
 @Setter
 @Getter
 @Component
-@Node
 @AllArgsConstructor
-
+@Node("PERSON") 
 public class Person {
-
-
-
   private String name;
   @Id private String UserName; //el identificador en la base de datos sera su user name
   private String Password;
   /*
   Relationships
   */ 
-   
   //HashSet de personas que conoce
   @Relationship(type = "KNOWS")
   private List<Person> teammates = new ArrayList<Person>();
@@ -51,23 +48,19 @@ public class Person {
   private Place location;
   @Relationship(type = "WANTS")
   private Genere interest;
+  @Relationship(type = "HASGENDER")
   private Genere hasGender;
-  public Person() { //constructor requerido for neo4j
+  public Person(PersonDTO persondto) { //constructor requerido for neo4j
     // Empty constructor required as of Neo4j API 2.0.5
   };
-
-  
   //para agregar al set de gente que conoce
   public void knows(Person person) {
     teammates.add(person);
   }
-
   //regresar el set con todas las personas que conoce
   public List<Person> knows(){
     return this.teammates;
   }
-
-  
 
   public String getName() {
     return name;

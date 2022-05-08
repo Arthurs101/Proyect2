@@ -7,9 +7,10 @@ import org.springframework.data.neo4j.core.schema.Node;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Node
+
 @AllArgsConstructor
 @Getter
+@Node("GENRE") 
 public class Genere {
     @Id private final String interestType;
 }
