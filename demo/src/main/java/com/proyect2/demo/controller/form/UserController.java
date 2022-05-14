@@ -6,16 +6,12 @@ import java.util.List;
 
 import com.service.Data.NE4JDB;
 import com.service.dto.PersonDTO;
-import com.service.entities.Person;
-import com.service.repository.PersonRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -48,18 +44,84 @@ public class UserController {
             this.warnin = new Warning("No puede dejar campos en blanco");
             return new ModelAndView ("redirect:/user/new");
         }
-        /*
+        
         if(base.usernamaeTaken(personDTO.getUsername())){
             this.warnin = new Warning("Usuario no disponible");
             return new ModelAndView ("redirect:/user/new");
         }
-        */
+        
         boolean success = base.AddUser(personDTO);
         if (success != true){
             this.warnin = new Warning("NO SE PUDO GUARDAR EL USUARIO CORRECTAMENTE");
             return new ModelAndView ("redirect:/user/new");
         }
-        return new ModelAndView ("redirect:/user/dashboard");
+        this.personDTO = personDTO;
+        this.warnin = new Warning("");
+        return new ModelAndView ("redirect:/user/Register2nd");
+    }
+    @GetMapping("/user/Register2nd")
+    public ModelAndView Register2nd(){
+        var params = new HashMap<String, Object>();
+        params.put("listQuality",base.getQUALITIESNOTLIKED(this.personDTO.getUsername()));
+        params.put("listQuality2",base.getQUALITIESNOTHAS(this.personDTO.getUsername()));
+        params.put("listPlaces",base.getPlaces(this.personDTO.getUsername()));
+        params.put("listGender",base.getGENDER(this.personDTO.getUsername(),1));
+        params.put("listGender2",base.getGENDER(this.personDTO.getUsername(),0));
+        params.put("warning", this.warnin);
+        return new ModelAndView ("registerPriority",params);
+    }
+    @GetMapping(value = "/user/addlikes/{name}")
+    public ModelAndView qualityLiked(@ModelAttribute("name") String id){ //crear relacion entre el usuario y la cualidad gustada
+        base.addLiked(this.personDTO.getUsername(), id);
+        return new ModelAndView("redirect:/user/Register2nd");
+    }
+    @GetMapping(value = "/user/addhas/{name}")
+    public ModelAndView qualityHAS(@ModelAttribute("name") String id){ //crear relacion entre el usuario y la cualidad gustada
+        base.addHAS(this.personDTO.getUsername(), id);
+        return new ModelAndView("redirect:/user/Register2nd");
+    }
+    @GetMapping(value = "/user/lives/{name}")
+    public ModelAndView Lives(@ModelAttribute("name") String id){ //crear relacion entre el usuario y la cualidad gustada
+        base.Lives(this.personDTO.getUsername(), id);
+        return new ModelAndView("redirect:/user/Register2nd");
+    }
+    @GetMapping(value = "/user/is/{name}")
+    public ModelAndView is(@ModelAttribute("name") String id){ //crear relacion entre el usuario y la cualidad gustada
+        base.IS(this.personDTO.getUsername(), id);
+        return new ModelAndView("redirect:/user/Register2nd");
+    }
+    @GetMapping(value = "/user/wants/{name}")
+    public ModelAndView want(@ModelAttribute("name") String id){ //crear relacion entre el usuario y la cualidad gustada
+        base.WANTS(this.personDTO.getUsername(), id);
+        return new ModelAndView("redirect:/user/Register2nd");
+    }
+    @GetMapping("/user/endsave")
+    public ModelAndView endsave(){
+        switch(base.validateRegisters(this.personDTO.getUsername())){
+            case 1:{
+                this.warnin = new Warning("No haz seleccionado el departamento");
+                return new ModelAndView("redirect:/user/Register2nd");
+            }
+            case 2:{
+                this.warnin = new Warning("Selecciona por lo menos una cualidad que te describa");
+                return new ModelAndView("redirect:/user/Register2nd");
+            }
+            case 3:{
+                this.warnin = new Warning("Selecciona por lo menos una cualidad que te guste");
+                return new ModelAndView("redirect:/user/Register2nd");
+            }
+            case 4:{
+                this.warnin = new Warning("No haz seleccionado tu sexo");
+                return new ModelAndView("redirect:/user/Register2nd");
+            }
+            case 5:{
+                this.warnin = new Warning("No haz seleccionado tu sexo de interes");
+                return new ModelAndView("redirect:/user/Register2nd");
+            }
+
+        }
+        this.warnin = new Warning("");
+        return new ModelAndView("redirect:/user/dashboard");
     }
 
     @GetMapping("/user/sign")
@@ -70,29 +132,59 @@ public class UserController {
         params.put("warning", this.warnin);
         return new ModelAndView("login",params);
     }
-
     @PostMapping("/user/login")
-    public ModelAndView loginUser(){//inicio de sesion 
-        return new ModelAndView("registerPriority");
+    public ModelAndView loginUser(PersonDTO personDTO){//inicio de sesion 
+        if(personDTO.getPassword().length() < 10){
+            this.warnin = new Warning("La contraseña debe de tener mas de 10 caracteres");
+            return new ModelAndView ("redirect:/user/sign");
+        }
+        if(personDTO.getUsername().length() == 0){
+            this.warnin = new Warning("No puede dejar campos en blanco");
+            return new ModelAndView ("redirect:/user/sign");
+        }
+        PersonDTO person = base.Login(personDTO.getUsername());
+        if(person == null){
+            this.warnin = new Warning("usuario no encontrado");
+            return new ModelAndView ("redirect:/user/sign");
+        }
+        if(!personDTO.getPassword().equals(person.getPassword())){
+            this.warnin = new Warning("La contraseña no concuerda");
+            return new ModelAndView ("redirect:/user/sign");
+        }
+        this.personDTO = personDTO;
+        this.warnin = new Warning("");
+        return new ModelAndView("redirect:/user/dashboard");
     }
 
     @GetMapping("/user/dashboard")
     public ModelAndView dashboard(){
         List<PersonDTO> testlist = new ArrayList<>();
-        testlist.add(new PersonDTO("test1"));
-        testlist.add(new PersonDTO("test2"));
-        testlist.add(new PersonDTO("test3"));
-        testlist.add(new PersonDTO("test4"));
+        testlist.add(new PersonDTO("test1","a"));
+        testlist.add(new PersonDTO("test2","b"));
+        testlist.add(new PersonDTO("test3","c"));
+        testlist.add(new PersonDTO("test4","d"));
         var params = new HashMap<String, Object>();
         params.put("listRoles", testlist );
         return new ModelAndView("userMainPanel", params);
     }
 
-    @GetMapping("/user/dashboard/add/{id}")
+    @GetMapping("/user/dashboard/addrecomend/{name}")
     public ModelAndView addUser(@ModelAttribute("id") String id)//solicitarle al MVC ek campo ID
     {
         
         return new ModelAndView("redirect:/user/dashboard");
+    }
+    @GetMapping("/user/dashboard/deleterecomend/{name}")
+    public ModelAndView popUser(@ModelAttribute("id") String id)//solicitarle al MVC ek campo ID
+    {
+        
+        return new ModelAndView("redirect:/user/dashboard");
+    }
+    @GetMapping("/user/friends")
+    public ModelAndView friends(){
+        var params = new HashMap<String, Object>();
+        params.put("listRoles", base.getFriends(this.personDTO.getUsername()) );
+        return new ModelAndView("userFriendships");
     }
     @GetMapping("/user/logout")
     public ModelAndView logout(){

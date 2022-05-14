@@ -3,14 +3,8 @@ OBJETO DE TRANSFERENCIA ENTRE BASE DE DATOS Y PAGINA
 */
 package com.service.dto;
 
-import java.util.Set;
-
-import javax.validation.constraints.NotBlank;
-
-import com.service.entities.Person;
-import com.service.entities.Place;
-
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,11 +18,18 @@ public class PersonDTO {
     private String name;
     private String username;
     private String password;
-    private Place ubivation; 
-    private Set<Person> teammates;
-    public PersonDTO(String name) {
+    private List<PersonDTO> teammates = new ArrayList<PersonDTO>();
+    public PersonDTO(String username,String name) {
         this.name = name;
+        this.username = username;
     }
-    
+
+    public void QuitRecomendations(String username) { //remover una recomendacion del listado
+        for(int i = 0; i < teammates.size() ; i++) {
+            if(teammates.get(i).getUsername().equals(username)){
+                teammates.remove(i);
+            }
+        }
+    }
 
 }

@@ -46,6 +46,12 @@
     margin: none;
     height: 100%;
   }
+  .grid-container2 {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    margin: none;
+    height: 100%;
+  }
   .grid-item {
     margin: none;
     font-size: 30px;
