@@ -17,20 +17,20 @@
     <br>
     <table id="tablestyle">
       <caption>Personas Recomendadas Para TI</caption>
-        <tr>
-          <th>NAME</th>
-          <th colspan="2">&nbsp;</th>
-        </tr>
         <tr th:each="role: ${listRoles}">
-          <td th:text="${role.name}">
+          <td>
+            <img th:src="@{/images/icon.png}" witdh="15px" height="15px" alt="picture">
+          </td>
+          <td th:text="@{usuario: }  +  ${role.username}">
+            <td th:text="@{nombre: }  + ${role.name}"></td>
             <td>
               <a th:href="@{addrecomend/} + ${role.name}"> <!-- Aceptar solicitud -->
-                <img th:src="@{/images/edit.png}" witdh="15px" height="15px" alt="edit">
+                <img th:src="@{/images/edit.png}" witdh="15px" height="15px" alt="aceptar">
               </a>
             </td>
             <td>
               <a th:href="@{deleterecomend/} + ${role.name}"> <!-- eliminar Persona-->
-                <img th:src="@{/images/delete.png}" witdh="15px" height="15px" alt="delete">
+                <img th:src="@{/images/delete.png}" witdh="15px" height="15px" alt="eliminar">
               </a>
           </td>
         </tr>
