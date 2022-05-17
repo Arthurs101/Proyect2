@@ -189,7 +189,7 @@ public class UserController {
         params.put("listRoles", base.getFriends(this.personDTO.getUsername()) );
         return new ModelAndView("userFriendships",params);
     }
-    @GetMapping("/user/dashboard/deletefriend/{username}")
+    @GetMapping("/user/deletefriend/{username}")
     public ModelAndView deleteUser(@ModelAttribute("username") String id)//solicitarle al MVC el campo de nombre
     {
         base.DeleteFriend(this.personDTO.getUsername(), id);
