@@ -1,14 +1,10 @@
 package com.service.Data;
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.service.dto.GenderDTO;
 import com.service.dto.PersonDTO;
 import com.service.dto.Place;
 import com.service.dto.QUALITYDTO;
-
 import org.neo4j.driver.AuthTokens;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
@@ -379,5 +375,67 @@ public void addFriend(String username1, String username2){
             return friends;
         }
     }
+    public void AddFriend(String username, String friend) {
+        try ( Session session = driver.session() )
+        {
+            session.writeTransaction( new TransactionWork<String>()
+            {
+                @Override
+                public String execute( Transaction tx )
+                {
+                    tx.run( "MATCH (q:Person {username: \"" + friend + "\"}),(p:Person {username: \"" + username + "\"})  CREATE (p)-[:KNOWS]->(q)" );
+                    return "";
+                }
+            } );
+            
+        }
+    }
+    public void DeleteFriend(String username, String friend) {
+        try ( Session session = driver.session() )
+        {
+            session.writeTransaction( new TransactionWork<String>()
+            {
+                @Override
+                public String execute( Transaction tx )
+                {
+                    tx.run( "MATCH (p:Person {username: \"" + username + "\"})-[r:KNOWS]->(q:Person {username: \"" + friend + "\"}) DELETE r" );
+                    return "";
+                }
+            } );
+            
+        }
+    }
+    public List<PersonDTO> getRecomendations(String username) {
+        try(Session session = driver.session()){
+            List<PersonDTO> friends = session.readTransaction( new TransactionWork<List<PersonDTO>>() 
+            {
+                @Override
+            public List<PersonDTO> execute (Transaction tx)
+            {
+                Result result = tx.run( "MATCH (q:Person{username: \"" + username + "\"})-[:LIKES]->(:QUALITY)<-[:HAS]-(p:Person)  Where (q)-[:WANTS]->(:GENDER)<-[:IS]-(p) and not p.username = q.username and not (q)-[:KNOWS]->(p) RETURN DISTINCT  p.name, p.username LIMIT 20");
+                List<Record> reco = result.list(); //lista de coincidencias
+                List<PersonDTO> tmp = new ArrayList<>();
+                for (int i = 0; i <reco.size(); i++){
+                    PersonDTO usertemp = new PersonDTO(reco.get(i).get("p.username").asString(),reco.get(i).get("p.name").asString());
+                    tmp.add(usertemp);
+                }
+                result = tx.run( "MATCH (q:Person{username: \"" + username + "\"})-[:LIKES]->(:QUALITY)<-[:HAS]-(p:Person)  Where (q)-[:LIVES]->(:PLACE)<-[:LIVES]-(p) and not p.username = q.username and not (q)-[:KNOWS]->(p) RETURN DISTINCT  p.name, p.username LIMIT 10");
+                reco = result.list(); //lista de coincidencias
+                for (int i = 0; i <reco.size(); i++){
+                    PersonDTO usertemp = new PersonDTO(reco.get(i).get("p.username").asString(),reco.get(i).get("p.name").asString());
+                    tmp.add(usertemp);
+                }
+                   return tmp;
+                    
+                }
+            }
+            );
+            return friends;
+        }
+    }
 }
 
+//por hacer: recomendar personas (copy paste a lo que mostraste a Moises ;v)
+// añadir amigos en controlador falta :v
+//borrar amigos falta en controller
+ 
