@@ -158,38 +158,47 @@ public class UserController {
 
     @GetMapping("/user/dashboard")
     public ModelAndView dashboard(){
-        List<PersonDTO> testlist = new ArrayList<>();
-        testlist.add(new PersonDTO("test1","a"));
-        testlist.add(new PersonDTO("test2","b"));
-        testlist.add(new PersonDTO("test3","c"));
-        testlist.add(new PersonDTO("test4","d"));
+        if(this.personDTO.empty()){
+            this.personDTO.setTeammates(base.getRecomendations(this.personDTO.getUsername()));
+        }
         var params = new HashMap<String, Object>();
-        params.put("listRoles", testlist );
+        params.put("listRoles", this.personDTO.getTeammates() );
         return new ModelAndView("userMainPanel", params);
     }
-
-    @GetMapping("/user/dashboard/addrecomend/{name}")
-    public ModelAndView addUser(@ModelAttribute("id") String id)//solicitarle al MVC ek campo ID
-    {
-        
+    @GetMapping("/user/recomendation")
+    public ModelAndView recomendation(){
         return new ModelAndView("redirect:/user/dashboard");
     }
-    @GetMapping("/user/dashboard/deleterecomend/{name}")
-    public ModelAndView popUser(@ModelAttribute("id") String id)//solicitarle al MVC ek campo ID
+
+    @GetMapping("/user/addrecomend/{username}")
+    public ModelAndView addUser(@ModelAttribute("username") String id)//solicitarle al MVC ek campo de nombre
+    {   
+        this.personDTO.QuitRecomendations(id);
+        base.AddFriend(this.personDTO.getUsername(), id);
+        return new ModelAndView("redirect:/user/dashboard");
+    }
+    @GetMapping("/user/deleterecomend/{username}")
+    public ModelAndView popUser(@ModelAttribute("username") String id)//solicitarle al MVC el campo de nombre
     {
-        
+        this.personDTO.QuitRecomendations(id);
         return new ModelAndView("redirect:/user/dashboard");
     }
     @GetMapping("/user/friends")
     public ModelAndView friends(){
         var params = new HashMap<String, Object>();
         params.put("listRoles", base.getFriends(this.personDTO.getUsername()) );
-        return new ModelAndView("userFriendships");
+        return new ModelAndView("userFriendships",params);
+    }
+    @GetMapping("/user/dashboard/deletefriend/{username}")
+    public ModelAndView deleteUser(@ModelAttribute("username") String id)//solicitarle al MVC el campo de nombre
+    {
+        base.DeleteFriend(this.personDTO.getUsername(), id);
+        return new ModelAndView("redirect:/user/friends");
     }
     @GetMapping("/user/logout")
     public ModelAndView logout(){
         this.personDTO = null; //eliminar informacion de sesion temporal}
-        return new ModelAndView ("index"); //regresar a inicio de sesion :p
+        return new ModelAndView ("main"); //regresar a inicio de sesion :p
     }
     
 }

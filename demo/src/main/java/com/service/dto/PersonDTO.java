@@ -32,4 +32,9 @@ public class PersonDTO {
         }
     }
 
+    public boolean empty() {
+        return this.teammates.isEmpty();
+    }
+    
+
 }

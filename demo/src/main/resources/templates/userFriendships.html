@@ -11,32 +11,29 @@
 </head>
 <body>
     <h1>Match and Mate</h1>
-    <img th:src="@{/images/jtl_logo.png}">  <!-- Aqui iria el logo de la pagina-->
+    <img th:src="@{/media/jtl_logo.png}">  <!-- Aqui iria el logo de la pagina-->
     <br><br>
-    <div><a href="/user/recomendation"><button class="button">Amistades Recomendadas</button></a>&nbsp;<div><a href="/user/friends"><button class="button">Amigoss</button></a>
+    <div><a href="/user/recomendation"><button class="button">Amistades Recomendadas</button></a>&nbsp;<a href="/user/friends"><button class="button">Amigoss</button></a>&nbsp;<a href="/user/logout"><button class="button">Salir</button></a><div>
     <br>
     <table id="tablestyle">
-      <caption>Personas</caption>
-        <tr>
-          <th>NAME</th>
-          <th colspan="2">&nbsp;</th>
+      <caption>Personas Que conoces</caption>
+      <tr>
+        <th>foto</th>
+        <th>usuario</th>
+        <th>nombre</th>
+      </tr>
+        <tr th:each="role: ${listRoles}">
+          <td>
+            <img th:src="@{/media/icon.jpg}" witdh="15px" height="15px" alt="picture">
+          </td>
+          <td th:text="${role.username}">
+            <td th:text="${role.name}"></td>
+            <td>
+              <a th:href="@{deletefriend/} + ${role.username}"> <!-- eliminar Persona-->
+                <img th:src="@{/media/delete.png}" witdh="15px" height="15px" alt="eliminar">
+              </a>
+          </td>
         </tr>
-        
-        <tr th:each=" people: ${listPeople}">
-            <td th:text="${people.name} + ${people.username}" >
-              <td>
-                <a th:href="@{add/} + ${project.id}"> <!-- Aceptar solicitud -->
-                  <img th:src="@{/images/edit.png}" witdh="15px" height="15px" alt="edit">
-                </a>
-              </td>
-              <td>
-                <a th:href="@{delete/} + ${project.id}"> <!-- eliminar Persona-->
-                  <img th:src="@{/images/delete.png}" witdh="15px" height="15px" alt="delete">
-                </a>
-            </td>
-              
-          </tr>
-
       </table>
 </body>
 </html>
