@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--descripcion de tamaño de la pantalla, que sea del mismo tamaño de la pantalla-->
     <meta name = "--descripcion" content="primera página"> <!--descripcion de la pagina-->
     <meta name = "robots" content="index, follow"> <!--permitir que los bots muestren la página-->
-    <link rel="stylesheet" href="/stylesheets/style.css"> <!--estio de la p´+agina con css-->>
+    <link rel="stylesheet" href="../static/stylesheets/style.css"> <!--estio de la p´+agina con css-->>
 </head>
-<body>
+
+
+<body bgcolor="Grey">
         <div class="grid-container2">
             <div class="grid-item">
                 <table id="tablestyle">
@@ -17,7 +19,8 @@
                         <td th:text="${quality.name}">
                             <td>
                                 <a th:href="@{addlikes/} + ${quality.name}"> <!-- Agregar relacion de gusto -->
-                                  <img th:src="@{/images/add.png}" witdh="15px" height="15px" alt="add">
+                                  <img src="../static/media/love.jpg" witdh="300px" height="300px" alt="love.jpg">
+
                                 </a>
                               </td>
                         </td>
@@ -32,7 +35,7 @@
                         <td th:text="${quality.name}">
                             <td>
                                 <a th:href="@{addhas/} + ${quality.name}">  <!-- Agregar relacion de poseer -->
-                                  <img th:src="@{/images/add.png}" witdh="15px" height="15px" alt="add">
+                                  <img src="../static/media/hearts1.png" witdh="300px" height="300px" alt="love.jpg">
                                 </a>
                               </td>
                         </td>
@@ -50,7 +53,7 @@
                       <td th:text="${place.name}">
                           <td>
                               <a th:href="@{lives/} + ${place.name}">  <!-- Agregar relacion de poseer -->
-                                <img th:src="@{/images/add.png}" witdh="15px" height="15px" alt="add">
+                                <img src="../static/media/people.jpeg" witdh="300px" height="300px" alt="love.jpg">
                               </a>
                             </td>
                       </td>
@@ -68,7 +71,7 @@
                     <td th:text="${gender.name}">
                         <td>
                             <a th:href="@{is/} + ${gender.name}">  <!-- Agregar relacion de poseer -->
-                              <img th:src="@{/images/add.png}" witdh="15px" height="15px" alt="add">
+                              <img src="../static/media/gang.jpg" witdh="300px" height="300px" alt="love.jpg">
                             </a>
                           </td>
                     </td>
@@ -86,7 +89,7 @@
                 <td th:text="${gender.name}">
                     <td>
                         <a th:href="@{wants/} + ${gender.name}">  <!-- Agregar relacion de poseer -->
-                          <img th:src="@{/images/add.png}" witdh="15px" height="15px" alt="add">
+                          <img src="../static/media/book.jpg" witdh="300px" height="300px" alt="love.jpg">
                         </a>
                       </td>
                 </td>
