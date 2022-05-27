@@ -1,5 +1,5 @@
 <!--Pagina para las amistades del Usuario-->
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">  <!--caracteres especiales-->
@@ -7,16 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--descripcion de tamaño de la pantalla, que sea del mismo tamaño de la pantalla-->
     <meta name = "--descripcion" content="primera página"> <!--descripcion de la pagina-->
     <meta name = "robots" content="index, follow"> <!--permitir que los bots muestren la página-->
-    <link rel="stylesheet" href="/stylesheets/style.css"> <!--estio de la p´+agina con css-->>
+    <link rel="stylesheet" href="C:\Users\Abner Garcia\Desktop\paginaprueba\static\stylesheets\style.css"> <!--estio de la p´+agina con css-->
 </head>
-<body>
-    <h1>Match and Mate</h1>
-    <img th:src="@{/media/jtl_logo.png}">  <!-- Aqui iria el logo de la pagina-->
-    <br><br>
+<body bgcolor="cream">
+<center>
+<b><font size="100"<h1>Match and Mate</h1></font></b>
+</center>
+    <div class="grid-item">
+            <img src="C:\Users\Abner Garcia\Desktop\paginaprueba\static\media\amor.jpg" width=1350 alt = "match" class = "mainBK">
+        </div>
+        <div class="grid-item">
+	<br>
     <div><a href="/user/recomendation"><button class="button">Amistades Recomendadas</button></a>&nbsp;<a href="/user/friends"><button class="button">Amigoss</button></a>&nbsp;<a href="/user/logout"><button class="button">Salir</button></a><div>
     <br>
     <table id="tablestyle">
-      <caption>Personas Que conoces</caption>
+    <caption>Personas que tu conoces</caption>
       <tr>
         <th>foto</th>
         <th>usuario</th>
@@ -24,13 +29,14 @@
       </tr>
         <tr th:each="role: ${listRoles}">
           <td>
-            <img th:src="@{/media/icon.jpg}" witdh="15px" height="15px" alt="picture">
+            <img th:src="@{/media/icon.jpg}" witdh="15px" height="15px" alt="Picture">
           </td>
           <td th:text="${role.username}">
             <td th:text="${role.name}"></td>
             <td>
+	     <br>
               <a th:href="@{deletefriend/} + ${role.username}"> <!-- eliminar Persona-->
-                <img th:src="@{/media/delete.png}" witdh="15px" height="15px" alt="eliminar">
+                <img th:src="@{/media/delete.png}" witdh="15px" height="15px" alt="Eliminar">
               </a>
           </td>
         </tr>
