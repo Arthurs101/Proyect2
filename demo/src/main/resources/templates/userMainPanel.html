@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--descripcion de tamaño de la pantalla, que sea del mismo tamaño de la pantalla-->
     <meta name = "--descripcion" content="primera página"> <!--descripcion de la pagina-->
     <meta name = "robots" content="index, follow"> <!--permitir que los bots muestren la página-->
-    <link rel="stylesheet" href="/stylesheets/style.css"> <!--estio de la p´+agina con css-->>
+    <link rel="stylesheet" href="./Resoures/Stylesheets/style2.css"> <!--estio de la p´+agina con css-->>
 </head>
 <body>
+
     <h1>Match and Mate</h1>
     <img th:src="@{/media/jtl_logo.png}">  <!-- Aqui iria el logo de la pagina-->
     <br><br>
-    <div><a href="/user/recomendation"><button class="button">Amistades Recomendadas</button></a>&nbsp;<a href="/user/friends"><button class="button">Amigoss</button></a>&nbsp;<a href="/user/logout"><button class="button">Salir</button></a><div>
+    <div><a href="/user/recomendation"><button class="button" style="background-color:red;width:485px;height:50px;" >Amistades Recomendadas</button></a>&nbsp;<a href="/user/friends"><button class="button" style="background-color:red; width:485px;height:50px; ">Amigos</button></a>&nbsp;<a href="/user/logout"><button class="button" style="background-color:red;width:485px;height:50px;">Salir </button></a><div>
     <br>
     <table id="tablestyle">
       <caption>Personas Recomendadas Para TI</caption>
@@ -30,15 +31,18 @@
             <td th:text="${role.name}"></td>
             <td>
               <a th:href="@{addrecomend/} + ${role.username}"> <!-- Aceptar solicitud -->
-                <img th:src="@{/media/edit.png}" witdh="15px" height="15px" alt="aceptar">
+                <img th:src="@{/media/aceptar.png}" witdh="15px" height="15px" alt="aceptar">
               </a>
             </td>
             <td>
               <a th:href="@{deleterecomend/} + ${role.username}"> <!-- eliminar Persona-->
-                <img th:src="@{/media/delete.png}" witdh="15px" height="15px" alt="eliminar">
+                <img th:src="@{/media/eliminar.png}" witdh="15px" height="15px" alt="eliminar">
               </a>
           </td>
         </tr>
     </table>
+<center>
+    <img src="/media/love.jpg" alt="Image" height="500" width="300" >
+  </center>
 </body>
 </html>
